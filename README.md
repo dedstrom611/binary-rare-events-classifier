@@ -20,3 +20,9 @@ The binary rare events classifier provides methods for sampling and classifying 
 2. bootstrap_sample - Calculate k bootstrap samples of size n from both the rare and abundant cases.
 3. get_majority_vote - Classify data based on the k samples and calculate a majority vote classification.
 4. get_quality_metrics - Calculate accuracy, precision, recall, AUC from the majority vote classifier.
+
+### Basic Plots
+Some basic plots to compare the quality of models can be found below.  The violin plot may be of limited value because imbalanced data may require a different probability threshold in order to more appropriately classify cases.
+
+![roc_chart](images/roc_chart.png "ROC Chart")
+![violin_plot](images/violin_plot.png "Violin Plot")
