@@ -22,33 +22,33 @@ class ImbalancedClassifier(object):
         y_test = self.y_test
         dep_variable=self.dep_variable
 
-def sample_abundant_data(self, tolerance=0.20):
-    '''Create a sample from the abundant class of a binary dependent variable.
+    def sample_abundant_data(self, tolerance=0.20):
+        '''Create a sample from the abundant class of a binary dependent variable.
 
-    INPUTS:
-    df (dataframe) - A pandas dataframe containing the set of features for modeling.
-    y_df (dataframe) - A pandas dataframe containing the dependent variable for which to produce the sample.
-    dep_variable (str) - The dataframe column representing the dependent variable, stored as 0/1 boolean values.
-    tolerance (float) - A tolerance factor for the number of samples to produce.  The resulting sample will be
-    between 1 +/- tolerance of the rare events.
+        INPUTS:
+        df (dataframe) - A pandas dataframe containing the set of features for modeling.
+        y_df (dataframe) - A pandas dataframe containing the dependent variable for which to produce the sample.
+        dep_variable (str) - The dataframe column representing the dependent variable, stored as 0/1 boolean values.
+        tolerance (float) - A tolerance factor for the number of samples to produce.  The resulting sample will be
+        between 1 +/- tolerance of the rare events.
 
-    RETURNS:
-    X_tr (dataframe) - A new dataframe containing all instances where dep_variable == 1 and the sampled rows
-    where dep_variable == 0.
-    y_tr (Pandas data series) - A new Pandas data series of the response variable based on the sample.
-    '''
-    df = pd.merge(self.X_train, pd.DataFrame(self.y_train, columns=[self.dep_variable], index=self.y_train.index),\
-    how='inner', left_index=True, right_index=True)
-    y_1 = df.loc[df[self.dep_variable] == 1]
+        RETURNS:
+        X_tr (dataframe) - A new dataframe containing all instances where dep_variable == 1 and the sampled rows
+        where dep_variable == 0.
+        y_tr (Pandas data series) - A new Pandas data series of the response variable based on the sample.
+        '''
+        df = pd.merge(self.X_train, pd.DataFrame(self.y_train, columns=[self.dep_variable], index=self.y_train.index),\
+        how='inner', left_index=True, right_index=True)
+        y_1 = df.loc[df[self.dep_variable] == 1]
 
-    sample_pct = random.uniform(1 - tolerance, 1 + tolerance)
-    sample_size = int(np.sum(df[self.dep_variable]) * sample_pct)
+        sample_pct = random.uniform(1 - tolerance, 1 + tolerance)
+        sample_size = int(np.sum(df[self.dep_variable]) * sample_pct)
 
-    samp = df.loc[df[self.dep_variable] == 0].sample(n=sample_size)
+        samp = df.loc[df[self.dep_variable] == 0].sample(n=sample_size)
 
-    new_x = pd.concat([samp, y_1], axis=0)
-    new_y = new_x.pop(dep_variable)
-    return new_x, new_y
+        new_x = pd.concat([samp, y_1], axis=0)
+        new_y = new_x.pop(dep_variable)
+        return new_x, new_y
 
     def bootstrap_sample(self, tolerance=0.20):
         '''Create bootstrap samples from the majority and minority class of a data frame.  The resulting
